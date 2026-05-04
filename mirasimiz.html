@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mirasımız</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>Mirasımız</h1>
+
+    <nav>
+        <a href="index.html">Ana Sayfa</a>
+        <a href="hakkinda.html">Hakkında</a>
+        <a href="cv.html">CV</a>
+        <a href="sehrim.html">Şehrim</a>
+        <a href="mirasimiz.html">Mirasımız</a>
+        <a href="#">İlgi Alanlarım</a>
+        <a href="#">İletişim</a>
+        <a href="#">Login</a>
+    </nav>
+</header>
+
+<main>
+
+<section>
+    <h2>Gordion Antik Kenti</h2>
+
+    <p>
+        Gordion Antik Kenti, Ankara’nın Polatlı ilçesinde yer alan ve Frig medeniyetinin 
+        başkenti olarak bilinen önemli bir tarihî yerleşim alanıdır. Özellikle Kral Midas 
+        ile ilişkilendirilen bu bölge, hem tarihî hem de arkeolojik açıdan büyük bir öneme sahiptir.
+    </p>
+
+    <p>
+        Gordion, geçmişte birçok medeniyete ev sahipliği yapmış olup, günümüzde yapılan 
+        kazılar sayesinde bu medeniyetlere ait kalıntılar gün yüzüne çıkarılmıştır. 
+        Bölgede yer alan tümülüsler (yığma mezarlar), dönemin önemli kişilerine ait 
+        mezar yapıları olarak bilinmektedir.
+    </p>
+
+    <p>
+        Bu antik kent, sadece Türkiye için değil dünya tarihi açısından da önemli bir yere sahiptir. 
+        2023 yılında UNESCO Dünya Mirası Listesi’ne dahil edilmesiyle birlikte önemi daha da artmıştır.
+    </p>
+</section>
+
+<section>
+    <h2>Görseller</h2>
+
+    <div class="slider">
+        <img id="mirasSlider" src="images/gordion1.jpg">
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <p>2026 Web Teknolojileri Proje Ödevi</p>
+</footer>
+
+<script>
+    let images = [
+        "images/gordion1.jpg",
+        "images/gordion2.jpg",
+        "images/gordion3.jpg",
+        "images/gordion4.jpg"
+    ];
+
+    let index = 0;
+
+    setInterval(() => {
+        index++;
+        if (index >= images.length) {
+            index = 0;
+        }
+        document.getElementById("mirasSlider").src = images[index];
+    }, 2000);
+</script>
+
+</body>
+</html>
