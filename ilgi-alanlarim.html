@@ -1,0 +1,77 @@
+İlgi alanlarım · HTML
+
+Kopyala
+
+<!DOCTYPE html>
+<html lang="tr">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İlgi Alanlarım</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+ 
+<body>
+ 
+    <header>
+        <h1>İlgi Alanlarım</h1>
+ 
+        <nav>
+            <a href="index.html">Ana Sayfa</a>
+            <a href="hakkinda.html">Hakkında</a>
+            <a href="cv.html">CV</a>
+            <a href="sehrim.html">Şehrim</a>
+            <a href="mirasimiz.html">Mirasımız</a>
+            <a href="ilgi-alanlarim.html">İlgi Alanlarım</a>
+            <a href="#">İletişim</a>
+            <a href="#">Login</a>
+        </nav>
+    </header>
+ 
+    <main>
+        <section>
+            <h2>Film Bilgileri</h2>
+            <div id="movie-info">
+                <!-- API'den gelen film verileri burada görünecek -->
+            </div>
+        </section>
+    </main>
+ 
+    <footer>
+        <p>2026 Web Teknolojileri Proje Ödevi</p>
+    </footer>
+ 
+    <!-- jQuery ile API'den veri çekme -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // TMDb API'den popüler filmleri çekme
+            // ✅ DEĞİŞEN SATIR: sonuna &language=tr-TR eklendi
+            $.get('https://api.themoviedb.org/3/movie/popular?api_key=99992f15726fd4411466c526efe591a6&language=tr-TR', function (data) {
+                console.log(data); // API yanıtını konsola yazdır
+ 
+                // Film verilerini listeleme
+                let movieInfo = '<ul>';
+ 
+                data.results.forEach(function (movie) {
+                    movieInfo += `
+                    <li>
+                        <h3>${movie.title}</h3>
+                        <p>${movie.overview}</p>
+                        <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
+                    </li>
+                `;
+                });
+ 
+                movieInfo += '</ul>';
+ 
+                // Film bilgilerini sayfada göster
+                $('#movie-info').html(movieInfo);
+            });
+        });
+    </script>
+ 
+</body>
+ 
+</html>
