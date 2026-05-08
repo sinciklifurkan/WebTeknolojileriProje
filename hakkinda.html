@@ -2,15 +2,19 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
+    <!-- Sayfa mobil cihazlarda da düzgün görünsün diye viewport tanımladım -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hakkında</title>
+    <title>Hakkında - Furkan</title>
+    <!-- Projenin tamamında tek bir CSS dosyası kullandım, tutarlı görünüm için -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
+ 
+    <!-- ===== SAYFA BAŞLIĞI VE NAVİGASYON ===== -->
     <header>
         <h1>Hakkında</h1>
-
+ 
+        <!-- Sitemin tüm bölümlerine buradan ulaşılabiliyor -->
         <nav>
             <a href="index.html">Ana Sayfa</a>
             <a href="hakkinda.html">Hakkında</a>
@@ -22,8 +26,11 @@
             <a href="login.html">Login</a>
         </nav>
     </header>
-
+ 
+    <!-- ===== ANA İÇERİK: KENDİMİ TANITAN BÖLÜMLER ===== -->
     <main>
+ 
+        <!-- Kısa öz tanıtım -->
         <section>
             <h2>Ben Kimim?</h2>
             <p>
@@ -32,7 +39,8 @@
                 yapmaktan hoşlandığım aktivitelerden bahsedeceğim.
             </p>
         </section>
-
+ 
+        <!-- Hobilerimi anlattığım bölüm -->
         <section>
             <h2>Hobilerim</h2>
             <p>
@@ -40,7 +48,8 @@
                 film izlemek ve farklı konularda kendimi geliştirmek hobilerim arasındadır.
             </p>
         </section>
-
+ 
+        <!-- Sevdiğim etkinlikleri anlattığım bölüm -->
         <section>
             <h2>Sevdiğim Etkinlikler</h2>
             <p>
@@ -48,19 +57,22 @@
                 sevdiğim etkinliklerdendir.
             </p>
         </section>
-
+ 
+        <!-- Proje gereksinimi: resim veya video gibi medya öğesi içermeli -->
         <section>
             <h2>Medya Alanı</h2>
-            <p>
-                Bu bölümde ilerleyen günlerde kişisel fotoğraf veya video gibi medya içerikleri
-                eklenecektir.
-            </p>
-        </section>
-    </main>
+ 
+            <!-- Kendi fotoğrafım; images klasörüne koyduğum resmi gösteriyorum -->
+            <img src="images/furkan.jpg" alt="Furkan - Profil Fotoğrafı" style="max-width:300px; border-radius:12px; display:block; margin:15px auto;">
 
+        </section>
+ 
+    </main>
+ 
+    <!-- ===== SAYFA ALTI ===== -->
     <footer>
         <p>2026 Web Teknolojileri Proje Ödevi</p>
     </footer>
-
+ 
 </body>
 </html>

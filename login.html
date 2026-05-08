@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="tr">
-
 <head>
     <meta charset="UTF-8">
+    <!-- Mobil uyumluluk için viewport ayarı -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login - Kullanıcı Girişi</title>
+    <!-- Tüm sayfada ortak kullandığım stil dosyası -->
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
+    <!-- ===== SAYFA BAŞLIĞI VE NAVİGASYON ===== -->
     <header>
-        <h1>Login</h1>
+        <h1>Kullanıcı Girişi</h1>
 
         <nav>
             <a href="index.html">Ana Sayfa</a>
@@ -25,46 +26,85 @@
         </nav>
     </header>
 
+    <!-- ===== ANA İÇERİK ===== -->
     <main>
         <section>
-            <h2>Kullanıcı Girişi</h2>
+            <h2>Sisteme Giriş Yapın</h2>
 
+            <!--
+                Ödev gereksinimi:
+                - Kullanıcı adı: b251210374@ogr.sakarya.edu.tr
+                - Şifre: b251210374
+                - Form PHP'ye POST edilmeli
+                - Boş alan ve mail formatı JS ile kontrol edilmeli
+                - onsubmit ile sayfa gönderilmeden önce loginKontrol() fonksiyonu çalışıyor
+            -->
             <form action="login.php" method="POST" onsubmit="return loginKontrol()">
 
+                <!-- Kullanıcı adı (email formatında olmalı) -->
                 <label for="email">Kullanıcı Adı / E-posta:</label>
-                <input type="text" id="email" name="email" placeholder="b211111111@sakarya.edu.tr">
+                <input type="text" id="email" name="email" placeholder="b251210374@ogr.sakarya.edu.tr">
 
+                <!-- Şifre alanı -->
                 <label for="password">Şifre:</label>
                 <input type="password" id="password" name="password" autocomplete="off">
+
+                <!-- JS hata mesajı buraya yazılıyor -->
+                <p id="login-hata" style="color:red; display:none; margin-bottom:10px;"></p>
+
                 <button type="submit">Giriş Yap</button>
 
             </form>
         </section>
     </main>
 
+    <!-- ===== SAYFA ALTI ===== -->
     <footer>
         <p>2026 Web Teknolojileri Proje Ödevi</p>
     </footer>
 
     <script>
+
+        /*
+         * loginKontrol fonksiyonu:
+         * Form gönderilmeden önce JS ile kontrol yapıyorum.
+         * return false → formu durdurur, return true → PHP'ye gönderir.
+         */
         function loginKontrol() {
-            let email = document.getElementById("email").value.trim();
+
+            // Kullanıcının girdiği değerleri alıyorum
+            let email    = document.getElementById("email").value.trim();
             let password = document.getElementById("password").value.trim();
+            let hataEl   = document.getElementById("login-hata");
 
+            // ---- Boş alan kontrolü ----
             if (email === "" || password === "") {
-                alert("Lütfen kullanıcı adı ve şifre alanlarını boş bırakmayınız.");
+                hataEl.textContent = "Kullanıcı adı ve şifre alanları boş bırakılamaz.";
+                hataEl.style.display = "block";
+                return false; // formu gönderme, durdur
+            }
+
+            // ---- E-posta format kontrolü ----
+            // Sakarya Üniversitesi mail formatı olmalı: xxx@ogr.sakarya.edu.tr
+            if (!email.endsWith("@ogr.sakarya.edu.tr") && !email.endsWith("@sakarya.edu.tr")) {
+                hataEl.textContent = "E-posta, Sakarya Üniversitesi formatında olmalıdır (@sakarya.edu.tr veya @ogr.sakarya.edu.tr).";
+                hataEl.style.display = "block";
                 return false;
             }
 
-            if (!email.endsWith("@sakarya.edu.tr")) {
-                alert("Kullanıcı adı Sakarya Üniversitesi mail formatında olmalıdır.");
+            // ---- Genel e-posta format kontrolü (@ ve . içermeli) ----
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                hataEl.textContent = "Geçerli bir e-posta adresi giriniz.";
+                hataEl.style.display = "block";
                 return false;
             }
 
+            // Tüm kontroller geçildi: formu PHP'ye gönder
+            hataEl.style.display = "none";
             return true;
         }
+
     </script>
 
 </body>
-
 </html>

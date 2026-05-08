@@ -1,47 +1,76 @@
 <?php
-$dogruKullanici = "b251210374@ogr.sakarya.edu.tr";
-$dogruSifre = "b251210374";
+/*
+ * login.php
+ * Login formundan POST ile gelen kullanıcı adı ve şifreyi kontrol ediyorum.
+ * Doğruysa hoşgeldin mesajı, yanlışsa login sayfasına geri gönderiyorum.
+ */
 
+// Ödevde belirlenen doğru kullanıcı bilgilerini tanımlıyorum
+$dogruKullanici = "b251210374@ogr.sakarya.edu.tr";
+$dogruSifre     = "b251210374";
+
+// Sadece POST isteği kabul ediyorum
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $email = $_POST["email"];
-    $password = $_POST["password"];
+    // Formdan gelen verileri alıyorum, güvenlik için trim kullanıyorum
+    $email    = trim($_POST["email"]);
+    $password = trim($_POST["password"]);
 
-    if ($email == $dogruKullanici && $password == $dogruSifre) {
-        echo "<!DOCTYPE html>";
-        echo "<html lang='tr'>";
-        echo "<head>";
-        echo "<meta charset='UTF-8'>";
-        echo "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
-        echo "<title>Giriş Başarılı</title>";
-        echo "<link rel='stylesheet' href='style.css'>";
-        echo "</head>";
-        echo "<body>";
+    // Kullanıcı adı ve şifre doğruysa başarı sayfası gösteriyorum
+    if ($email === $dogruKullanici && $password === $dogruSifre) {
+?>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Başarılı</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-        echo "<header>";
-        echo "<h1>Giriş Başarılı</h1>";
-        echo "</header>";
+    <header>
+        <h1>Giriş Başarılı</h1>
+        <nav>
+            <a href="index.html">Ana Sayfa</a>
+            <a href="hakkinda.html">Hakkında</a>
+            <a href="cv.html">CV</a>
+            <a href="sehrim.html">Şehrim</a>
+            <a href="mirasimiz.html">Mirasımız</a>
+            <a href="ilgi-alanlarim.html">İlgi Alanlarım</a>
+            <a href="iletisim.html">İletişim</a>
+            <a href="login.html">Login</a>
+        </nav>
+    </header>
 
-        echo "<main>";
-        echo "<section>";
-        echo "<h2>Hoşgeldiniz b251210374@ogr.sakarya.edu.tr</h2>";
-        echo "<p>Login işlemi başarıyla tamamlanmıştır.</p>";
-        echo "<a href='index.html'>Ana Sayfaya Dön</a>";
-        echo "</section>";
-        echo "</main>";
+    <main>
+        <section>
+            <!-- Ödev gereksinimi: "Hoşgeldiniz [Öğrenci No]" mesajı gösterilmeli -->
+            <h2>Hoşgeldiniz b251210374</h2>
+            <p>Login işlemi başarıyla tamamlanmıştır. Sisteme giriş yaptınız.</p>
+            <a href="index.html">Ana Sayfaya Dön</a>
+        </section>
+    </main>
 
-        echo "<footer>";
-        echo "<p>2026 Web Teknolojileri Proje Ödevi</p>";
-        echo "</footer>";
+    <footer>
+        <p>2026 Web Teknolojileri Proje Ödevi</p>
+    </footer>
 
-        echo "</body>";
-        echo "</html>";
+</body>
+</html>
+<?php
     } else {
-        header("Location: login.html");
+        /*
+         * Kullanıcı adı veya şifre yanlışsa:
+         * Kullanıcıyı hata parametresiyle login sayfasına yönlendiriyorum.
+         * login.html'de bu parametreyi okuyarak hata mesajı gösterebilirim.
+         */
+        header("Location: login.html?hata=1");
         exit();
     }
 
 } else {
+    // POST dışında bir istekle gelinirse login sayfasına yönlendir
     header("Location: login.html");
     exit();
 }

@@ -3,15 +3,19 @@
 
 <head>
     <meta charset="UTF-8">
+    <!-- Mobil uyumluluk için viewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>İletişim</title>
+    <!-- Ortak stil dosyası -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+    <!-- ===== SAYFA BAŞLIĞI VE NAVİGASYON ===== -->
     <header>
         <h1>İletişim</h1>
+
         <nav>
             <a href="index.html">Ana Sayfa</a>
             <a href="hakkinda.html">Hakkında</a>
@@ -24,46 +28,263 @@
         </nav>
     </header>
 
+    <!-- ===== ANA İÇERİK ===== -->
     <main>
         <section>
             <h2>Bize Ulaşın</h2>
-            <form id="contact-form" method="POST" action="submit_form.php">
-                <label for="name">Ad Soyad:</label>
-                <input type="text" id="name" name="name" required>
-                
-                <label for="email">E-posta:</label>
-                <input type="email" id="email" name="email" required>
 
-                <label for="message">Mesaj:</label>
-                <textarea id="message" name="message" required></textarea>
+            <!--
+                Bu formda text, email, tel, number, radio, select, textarea ve checkbox
+                elemanları kullanılmıştır. Form kontrolleri iki farklı yöntemle yapılmaktadır:
+                1. Native JavaScript kontrolü
+                2. Vue.js tabanlı kontrol
+                Form başarılı olduğunda bilgiler submit_form.php sayfasına POST edilir.
+            -->
 
-                <button type="submit">Gönder</button>
-            </form>
+            <div id="vue-form">
+                <form id="iletisim-form" method="POST" action="submit_form.php">
+
+                    <!-- Ad Soyad -->
+                    <label for="ad">Ad Soyad: *</label>
+                    <input type="text" id="ad" name="ad">
+
+                    <!-- E-posta -->
+                    <label for="email">E-posta: *</label>
+                    <input type="text" id="email" name="email" placeholder="ornek@mail.com">
+
+                    <!-- Telefon -->
+                    <label for="telefon">Telefon: *</label>
+                    <input type="text" id="telefon" name="telefon" placeholder="05xxxxxxxxx">
+
+                    <!-- Yaş -->
+                    <label for="yas">Yaş:</label>
+                    <input type="number" id="yas" name="yas" min="1" max="120">
+
+                    <!-- Cinsiyet -->
+                    <label>Cinsiyet:</label>
+                    <div class="radio-group">
+                        <input type="radio" id="erkek" name="cinsiyet" value="Erkek">
+                        <label for="erkek">Erkek</label>
+
+                        <input type="radio" id="kadin" name="cinsiyet" value="Kadın">
+                        <label for="kadin">Kadın</label>
+                    </div>
+
+                    <!-- Şehir -->
+                    <label for="sehir">Şehir:</label>
+                    <select id="sehir" name="sehir">
+                        <option value="">-- Şehir Seçin --</option>
+                        <option value="Ankara">Ankara</option>
+                        <option value="İstanbul">İstanbul</option>
+                        <option value="İzmir">İzmir</option>
+                        <option value="Sakarya">Sakarya</option>
+                        <option value="Diğer">Diğer</option>
+                    </select>
+
+                    <!-- Konu -->
+                    <label for="konu">Konu: *</label>
+                    <input type="text" id="konu" name="konu">
+
+                    <!-- Mesaj -->
+                    <label for="mesaj">Mesaj: *</label>
+                    <textarea id="mesaj" name="mesaj" rows="5"></textarea>
+
+                    <!-- KVKK -->
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="kvkk" name="kvkk" value="evet">
+                        <label for="kvkk">Kişisel verilerimin işlenmesine onay veriyorum.</label>
+                    </div>
+
+                    <!-- Hata ve başarı mesajları -->
+                    <div id="hata-mesaji"></div>
+                    <div id="basari-mesaji"></div>
+
+                    <!-- Butonlar -->
+                    <div class="form-buttons">
+                        <button type="button" class="btn-control" onclick="nativeKontrol()">
+                            Bilgileri Kontrol Et
+                        </button>
+
+                        <button type="button" class="btn-submit" onclick="vueKontrol()">
+                            Formu Gönder
+                        </button>
+                    </div>
+
+                </form>
+            </div>
         </section>
     </main>
 
+    <!-- ===== SAYFA ALTI ===== -->
     <footer>
         <p>2026 Web Teknolojileri Proje Ödevi</p>
     </footer>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Vue.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
     <script>
-        // Form doğrulama işlemleri
-        $('#contact-form').on('submit', function (e) {
-            e.preventDefault();
 
-            let name = $('#name').val();
-            let email = $('#email').val();
-            let message = $('#message').val();
+        /* ============================================================
+           YARDIMCI FONKSİYONLAR
+           ============================================================ */
 
-            // Basit form doğrulaması
-            if (name === '' || email === '' || message === '') {
-                alert('Lütfen tüm alanları doldurun.');
-            } else {
-                alert('Mesajınız gönderildi!');
-                this.submit(); // Formu gönder
+        function hataGoster(mesaj) {
+            let hataAlani = document.getElementById('hata-mesaji');
+            let basariAlani = document.getElementById('basari-mesaji');
+
+            hataAlani.textContent = mesaj;
+            hataAlani.style.display = 'block';
+
+            basariAlani.style.display = 'none';
+        }
+
+        function basariGoster(mesaj) {
+            let hataAlani = document.getElementById('hata-mesaji');
+            let basariAlani = document.getElementById('basari-mesaji');
+
+            basariAlani.textContent = mesaj;
+            basariAlani.style.display = 'block';
+
+            hataAlani.style.display = 'none';
+        }
+
+        function mesajlariGizle() {
+            document.getElementById('hata-mesaji').style.display = 'none';
+            document.getElementById('basari-mesaji').style.display = 'none';
+        }
+
+        function emailGecerliMi(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function telefonGecerliMi(telefon) {
+            return /^[0-9]{10,11}$/.test(telefon.replace(/\s/g, ''));
+        }
+
+        /* ============================================================
+           1. KONTROL: NATIVE JAVASCRIPT
+           ============================================================ */
+
+        function nativeKontrol() {
+            mesajlariGizle();
+
+            let ad = document.getElementById('ad').value.trim();
+            let email = document.getElementById('email').value.trim();
+            let telefon = document.getElementById('telefon').value.trim();
+            let konu = document.getElementById('konu').value.trim();
+            let mesaj = document.getElementById('mesaj').value.trim();
+            let kvkk = document.getElementById('kvkk').checked;
+
+            if (ad === '') {
+                hataGoster('Ad Soyad alanı boş bırakılamaz.');
+                return;
             }
-        });
+
+            if (email === '') {
+                hataGoster('E-posta alanı boş bırakılamaz.');
+                return;
+            }
+
+            if (!emailGecerliMi(email)) {
+                hataGoster('Lütfen geçerli bir e-posta adresi giriniz.');
+                return;
+            }
+
+            if (telefon === '') {
+                hataGoster('Telefon alanı boş bırakılamaz.');
+                return;
+            }
+
+            if (!telefonGecerliMi(telefon)) {
+                hataGoster('Telefon numarası sadece rakamlardan oluşmalıdır ve 10-11 hane olmalıdır.');
+                return;
+            }
+
+            if (konu === '') {
+                hataGoster('Konu alanı boş bırakılamaz.');
+                return;
+            }
+
+            if (mesaj === '') {
+                hataGoster('Mesaj alanı boş bırakılamaz.');
+                return;
+            }
+
+            if (!kvkk) {
+                hataGoster('Kişisel verilerin işlenmesine onay verilmelidir.');
+                return;
+            }
+
+            basariGoster('Bilgiler kontrol edildi. Form gönderilmeye hazır.');
+        }
+
+        /* ============================================================
+           2. KONTROL: VUE.JS
+           ============================================================ */
+
+        function vueKontrol() {
+            mesajlariGizle();
+
+            let vueDogrulayici = new Vue({
+                data: {
+                    ad: document.getElementById('ad').value.trim(),
+                    email: document.getElementById('email').value.trim(),
+                    telefon: document.getElementById('telefon').value.trim(),
+                    konu: document.getElementById('konu').value.trim(),
+                    mesaj: document.getElementById('mesaj').value.trim(),
+                    kvkk: document.getElementById('kvkk').checked
+                },
+
+                methods: {
+                    dogrula() {
+                        if (this.ad === '') {
+                            return 'Ad Soyad alanı boş bırakılamaz.';
+                        }
+
+                        if (this.email === '') {
+                            return 'E-posta alanı boş bırakılamaz.';
+                        }
+
+                        if (!emailGecerliMi(this.email)) {
+                            return 'Lütfen geçerli bir e-posta adresi giriniz.';
+                        }
+
+                        if (this.telefon === '') {
+                            return 'Telefon alanı boş bırakılamaz.';
+                        }
+
+                        if (!telefonGecerliMi(this.telefon)) {
+                            return 'Telefon numarası sadece rakamlardan oluşmalıdır ve 10-11 hane olmalıdır.';
+                        }
+
+                        if (this.konu === '') {
+                            return 'Konu alanı boş bırakılamaz.';
+                        }
+
+                        if (this.mesaj === '') {
+                            return 'Mesaj alanı boş bırakılamaz.';
+                        }
+
+                        if (!this.kvkk) {
+                            return 'Kişisel verilerin işlenmesine onay verilmelidir.';
+                        }
+
+                        return null;
+                    }
+                }
+            });
+
+            let hata = vueDogrulayici.dogrula();
+
+            if (hata) {
+                hataGoster(hata);
+            } else {
+                alert('Form başarıyla kontrol edildi. Gönderiliyor...');
+                document.getElementById('iletisim-form').submit();
+            }
+        }
+
     </script>
 
 </body>
