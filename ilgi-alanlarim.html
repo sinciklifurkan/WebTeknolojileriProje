@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <!-- Responsive görünüm için viewport ayarı -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İlgi Alanlarım - Filmler</title>
+    <title>İlgi Alanlarım - Film Arama</title>
     <!-- Projenin ortak stil dosyası -->
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <!-- ===== SAYFA BAŞLIĞI VE NAVİGASYON ===== -->
@@ -30,16 +32,18 @@
     <!-- ===== ANA İÇERİK ===== -->
     <main>
         <section>
-            <h2>Popüler Filmler</h2>
+            <h2>Film Arama</h2>
 
-            <!-- API verisi yüklenene kadar kullanıcıya yükleniyor mesajı gösteriyorum -->
-            <p id="yukleniyor" style="text-align:center; color:#888;">Filmler yükleniyor...</p>
+            <!-- Film arama alanı -->
+            <div class="movie-search-box">
+                <input type="text" id="filmAdi" placeholder="Film adı giriniz">
+                <button type="button" onclick="filmAra()">Film Ara</button>
+            </div>
 
-            <!--
-                Ödev gereksinimi: ücretsiz bir API'den veri çekilmeli.
-                Ben TMDb (The Movie Database) API'sini kullandım.
-                Film kartları JavaScript ile bu div'in içine ekleniyor.
-            -->
+            <!-- Hata / bilgi mesajı -->
+            <p id="film-mesaj"></p>
+
+            <!-- API'den gelen film bilgileri burada gösteriyorum -->
             <div id="movie-info"></div>
         </section>
     </main>
@@ -49,60 +53,84 @@
         <p>2026 Web Teknolojileri Proje Ödevi</p>
     </footer>
 
-    <!-- jQuery kütüphanesi: AJAX isteği için kullandım -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <script>
-        $(document).ready(function () {
+        function filmAra() {
+            const apiKey = "99992f15726fd4411466c526efe591a6";
+            const filmAdi = document.getElementById("filmAdi").value.trim();
+            const movieInfo = document.getElementById("movie-info");
+            const filmMesaj = document.getElementById("film-mesaj");
 
-            /*
-             * TMDb API'sine istek atıyorum.
-             * language=tr-TR parametresi sayesinde Türkçe film açıklamaları geliyor.
-             * API key: kendi aldığım ücretsiz anahtar
-             */
-            $.get(
-                'https://api.themoviedb.org/3/movie/popular?api_key=99992f15726fd4411466c526efe591a6&language=tr-TR',
-                function (data) {
+            movieInfo.innerHTML = "";
+            filmMesaj.textContent = "";
+            filmMesaj.style.color = "#555";
 
-                    // Yükleniyor yazısını gizliyorum, veriler geldi
-                    $('#yukleniyor').hide();
+            if (filmAdi === "") {
+                filmMesaj.textContent = "Lütfen aramak istediğiniz film adını yazınız.";
+                filmMesaj.style.color = "red";
+                return;
+            }
 
-                    // Film kartlarını tutan HTML dizisini başlatıyorum
-                    let html = '<ul>';
+            filmMesaj.textContent = "Film bilgileri yükleniyor...";
 
-                    // Gelen film listesini tek tek döngüye alıyorum
-                    data.results.forEach(function (film) {
+            const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(filmAdi)}&language=tr-TR`;
 
-                        // Poster resmi için TMDb'nin resim sunucusunu kullanıyorum
-                        let posterUrl = 'https://image.tmdb.org/t/p/w500' + film.poster_path;
+            fetch(url)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    if (!data.results || data.results.length === 0) {
+                        filmMesaj.textContent = "Aradığınız film bulunamadı.";
+                        filmMesaj.style.color = "red";
+                        return;
+                    }
 
-                        // Her film için bir kart oluşturuyorum
-                        html += `
-                            <li>
-                                <!-- Film posteri: üstte gösteriyorum -->
-                                <img src="${posterUrl}" alt="${film.title} posteri">
+                    filmMesaj.textContent = "";
 
-                                <!-- Film bilgileri: alt kısım -->
-                                <div class="card-body">
-                                    <h3>${film.title}</h3>
-                                    <p>${film.overview || 'Bu film için Türkçe açıklama bulunmuyor.'}</p>
-                                </div>
-                            </li>
-                        `;
-                    });
+                    const film = data.results[0];
 
-                    html += '</ul>';
+                    const posterUrl = film.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${film.poster_path}`
+                        : "";
 
-                    // Oluşturduğum HTML'i sayfaya yerleştiriyorum
-                    $('#movie-info').html(html);
-                }
-            ).fail(function () {
-                // API isteği başarısız olursa kullanıcıya hata mesajı gösteriyorum
-                $('#yukleniyor').text('Filmler yüklenirken bir hata oluştu. Lütfen internet bağlantınızı kontrol edin.');
-            });
+                    const aciklama = film.overview
+                        ? film.overview
+                        : "Bu film için Türkçe açıklama bulunmamaktadır.";
 
-        });
+                    const yayinTarihi = film.release_date
+                        ? film.release_date
+                        : "Yayın tarihi bulunamadı.";
+
+                    const puan = film.vote_average
+                        ? film.vote_average
+                        : "Puan bilgisi bulunamadı.";
+
+                    movieInfo.innerHTML = `
+                        <div class="movie-card">
+                            <div class="movie-poster">
+                                ${
+                                    posterUrl
+                                    ? `<img src="${posterUrl}" alt="${film.title} posteri">`
+                                    : `<p>Bu film için poster bulunamadı.</p>`
+                                }
+                            </div>
+
+                            <div class="movie-detail">
+                                <h3>${film.title}</h3>
+                                <p><strong>Açıklama:</strong> ${aciklama}</p>
+                                <p><strong>Yayın Tarihi:</strong> ${yayinTarihi}</p>
+                                <p><strong>Film Puanı:</strong> ${puan}</p>
+                            </div>
+                        </div>
+                    `;
+                })
+                .catch(function () {
+                    filmMesaj.textContent = "API bağlantısında bir hata oluştu. Lütfen internet bağlantınızı kontrol ediniz.";
+                    filmMesaj.style.color = "red";
+                });
+        }
     </script>
 
 </body>
+
 </html>

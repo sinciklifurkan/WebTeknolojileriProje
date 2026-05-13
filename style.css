@@ -1,18 +1,32 @@
-/* RESET */
+/* ===============================
+   GENEL SIFIRLAMA
+   =============================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* BODY */
+/* ===============================
+   SAYFA YAPISI
+   =============================== */
+html,
 body {
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     color: #222;
+    display: flex;
+    flex-direction: column;
 }
 
-/* HEADER */
+/* ===============================
+   HEADER
+   =============================== */
 header {
     background-color: #2c3e50;
     color: white;
@@ -25,7 +39,9 @@ header h1 {
     margin-bottom: 10px;
 }
 
-/* NAVBAR */
+/* ===============================
+   NAVBAR
+   =============================== */
 nav {
     margin-top: 15px;
 }
@@ -42,23 +58,25 @@ nav a:hover {
     color: #3498db;
 }
 
-/* MAIN */
+/* ===============================
+   ANA İÇERİK
+   =============================== */
 main {
-    padding: 30px;
+    width: 100%;
     max-width: 1100px;
-    margin: auto;
+    padding: 30px;
+    margin: 0 auto;
+    flex: 1;
 }
 
-/* SECTION */
 section {
-    background: white;
+    background-color: white;
     padding: 30px;
     margin-bottom: 30px;
     border-radius: 14px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
-/* BAŞLIKLAR */
 h2 {
     margin-bottom: 24px;
     color: #2c3e50;
@@ -67,19 +85,19 @@ h2 {
     font-weight: 600;
 }
 
-/* PARAGRAF (genel) */
 p {
     line-height: 1.8;
     margin-bottom: 10px;
 }
 
-/* LİSTE (genel) */
 ul {
     margin-left: 25px;
     line-height: 1.8;
 }
 
-/* SLIDER */
+/* ===============================
+   SLIDER
+   =============================== */
 .slider {
     width: 100%;
     max-width: 750px;
@@ -97,146 +115,17 @@ ul {
     object-position: center;
     display: block;
     border-radius: 16px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     filter: contrast(110%) saturate(115%);
 }
 
-/* FOOTER */
-footer {
-    text-align: center;
-    padding: 18px;
-    background-color: #2c3e50;
-    color: white;
-    margin-top: 30px;
-}
-
-/* =============================================
-   FİLM KARTLARI
-   ============================================= */
-
-#movie-info ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
-}
-
-/* Kart */
-#movie-info li {
-    background: #fff;
-    border-radius: 14px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.10);
-    overflow: hidden;
-    padding: 0;
-    margin: 0;
+/* ===============================
+   FORM GENEL TASARIM
+   =============================== */
+form {
     display: flex;
     flex-direction: column;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-#movie-info li:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.16);
-}
-
-/* Poster — ÜSTTE */
-#movie-info li img {
     width: 100%;
-    height: 300px;
-    object-fit: cover;
-    object-position: top;
-    display: block;
-    flex-shrink: 0;
-    transition: transform 0.35s ease;
-    order: -1; /* her zaman en üstte */
-}
-
-#movie-info li:hover img {
-    transform: scale(1.03);
-}
-
-/* Metin alanı — ALTTA */
-#movie-info .card-body {
-    padding: 18px 20px 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    flex: 1;
-    order: 1;
-}
-
-/* Film adı */
-#movie-info h3 {
-    color: #1a252f;
-    font-size: 1.08em;
-    font-weight: 700;
-    line-height: 1.4;
-    margin: 0;
-}
-
-/* Açıklama */
-#movie-info p {
-    color: #555;
-    font-size: 0.90em;
-    line-height: 1.75;
-    margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-/* Tablet: 2 sütun */
-@media (max-width: 800px) {
-    #movie-info ul {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-/* Mobil: 1 sütun */
-@media (max-width: 500px) {
-    #movie-info ul {
-        grid-template-columns: 1fr;
-    }
-}
-form {
-    display: flex;
-    flex-direction: column;
-    width: 400px;
-    margin: 0 auto;
-}
-
-form label {
-    margin-top: 10px;
-    font-weight: bold;
-}
-
-form input, form textarea {
-    margin-bottom: 15px;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-form button {
-    padding: 10px;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-form button:hover {
-    background-color: #2980b9;
-}
-/* FORM TASARIMI */
-form {
-    display: flex;
-    flex-direction: column;
     max-width: 450px;
     margin: 20px auto;
 }
@@ -251,37 +140,41 @@ form label {
 form input,
 form textarea,
 form select {
+    width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 15px;
 }
 
-form button {
-    margin-top: 18px;
-    padding: 12px;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
+textarea {
+    resize: vertical;
 }
 
-form button:hover {
-    background-color: #2980b9;
-}
-/* İLETİŞİM FORMU RADYO VE CHECKBOX ALANLARI */
+/* ===============================
+   RADIO VE CHECKBOX
+   =============================== */
 .radio-group,
 .checkbox-group {
     margin: 10px 0 15px 0;
+}
+
+.radio-group {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+}
+
+.radio-group input,
+.checkbox-group input {
+    width: auto;
 }
 
 .radio-group label,
 .checkbox-group label {
     font-weight: normal;
     display: inline;
-    margin-right: 15px;
+    margin: 0;
 }
 
 .checkbox-group {
@@ -290,12 +183,15 @@ form button:hover {
     gap: 8px;
 }
 
-/* MESAJ ALANLARI */
+/* ===============================
+   HATA VE BAŞARI MESAJLARI
+   =============================== */
 #hata-mesaji {
     color: #c0392b;
     background-color: #fdecea;
     padding: 10px;
     border-radius: 8px;
+    margin-top: 10px;
     margin-bottom: 10px;
     display: none;
 }
@@ -305,11 +201,14 @@ form button:hover {
     background-color: #eafaf1;
     padding: 10px;
     border-radius: 8px;
+    margin-top: 10px;
     margin-bottom: 10px;
     display: none;
 }
 
-/* İLETİŞİM FORMU BUTONLARI */
+/* ===============================
+   İLETİŞİM FORMU BUTONLARI
+   =============================== */
 .form-buttons {
     display: flex;
     gap: 15px;
@@ -343,7 +242,176 @@ form button:hover {
     background-color: #1e8449;
 }
 
-/* TEXTAREA DÜZENİ */
-textarea {
-    resize: vertical;
+/* ===============================
+   FİLM ARAMA ALANI
+   =============================== */
+.movie-search-box {
+    display: flex;
+    gap: 12px;
+    margin: 25px 0;
+}
+
+.movie-search-box input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.movie-search-box button {
+    padding: 12px 22px;
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 15px;
+}
+
+.movie-search-box button:hover {
+    background-color: #1f2d3a;
+}
+
+#film-mesaj {
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* ===============================
+   FİLM SONUÇ KARTI
+   =============================== */
+.movie-card {
+    display: flex;
+    gap: 25px;
+    margin-top: 25px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.movie-poster img {
+    width: 220px;
+    border-radius: 10px;
+    display: block;
+}
+
+.movie-detail {
+    flex: 1;
+}
+
+.movie-detail h3 {
+    color: #3498db;
+    margin-bottom: 12px;
+    font-size: 26px;
+}
+
+.movie-detail p {
+    line-height: 1.7;
+    margin-bottom: 10px;
+}
+
+/* ===============================
+   FOOTER
+   =============================== */
+footer {
+    text-align: center;
+    padding: 18px;
+    background-color: #2c3e50;
+    color: white;
+    margin-top: auto;
+}
+
+/* ===============================
+   MOBİL UYUMLULUK
+   =============================== */
+@media (max-width: 768px) {
+    main {
+        padding: 20px;
+    }
+
+    nav a {
+        display: inline-block;
+        margin: 6px;
+    }
+
+    section {
+        padding: 22px;
+    }
+
+    .slider {
+        height: 280px;
+    }
+
+    .movie-search-box {
+        flex-direction: column;
+    }
+
+    .movie-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .movie-poster img {
+        width: 100%;
+        max-width: 260px;
+        margin: auto;
+    }
+
+    .form-buttons {
+        flex-direction: column;
+    }
+}
+/* ŞEHRİM SAYFASI - ANKARA VE POLATLI GÖRSELLERİ */
+.slider {
+    width: 100%;
+    max-width: 750px;
+    height: 380px;
+    margin: 30px auto;
+    overflow: hidden;
+    border-radius: 18px;
+    background-color: #eaeaea;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.slider img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    border-radius: 18px;
+}
+
+/* Ankara ve Polatlı görselleri özel ayar */
+#ankaraSlider,
+#polatliSlider {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Mobil uyumluluk */
+@media (max-width: 768px) {
+    .slider {
+        max-width: 100%;
+        height: 240px;
+        margin: 20px auto;
+        border-radius: 14px;
+    }
+
+    .slider img {
+        border-radius: 14px;
+        object-fit: cover;
+        object-position: center;
+    }
+}
+#polatliSlider {
+    object-position: center center;
+}
+#ankaraSlider {
+    object-position: center center;
 }
